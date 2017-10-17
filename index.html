@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.js"></script>
+    <link rel="stylesheet" 
+          type="text/css" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .hour {
+      color: #bbb;
+      cursor: pointer;
+    }
+    .selected {
+      background-color: #0aa8ce;
+      color: white;
+    }
+    .table > tbody > tr.selected > td {
+      border-top: 1px solid #0aa8ce;
+    }
+    .selected td:hover {
+      background-color: #0a89af;
+      color: white;
+    }
+  </style>
+  <script>
+    new Vue({
+      el: '#app',
+      data: () => ({
+        days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(e => ({
+          name: e,
+          hours: Array(13).fill(0).map((e, i) => ({
+            index: i + 8,
+            selected: false
+          }))
+        }))
+      }),
+      methods: {
+        select(e) {
+          e.selected = !e.selected;
+        },
+      }
+    });
+  </script>
+</head>
+
+<body>
+<div id="app">
+  <div class="container">
+    <div class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2 col-sm-4 col-xs-6" v-for="day in days">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>{{day.name}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="hour in day.hours" class="hour" :class="{ selected: hour.selected }">
+                  <td @click="select(hour)">{{hour.index}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
